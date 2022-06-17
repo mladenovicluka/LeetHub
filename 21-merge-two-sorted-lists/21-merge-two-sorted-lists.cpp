@@ -12,83 +12,29 @@ class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* a, ListNode* b) {
         
-
-        ListNode* head=NULL;
+        if(!a)return b;
+        if(!b)return a;
         
+        ListNode* head=(ListNode*)malloc(sizeof(ListNode));
+        ListNode* dummy=head;    
         while(a&&b)
         {
-            ListNode* pom=(ListNode*)malloc(sizeof(ListNode));
-            pom->next=NULL;
-            if(a->val<=b->val)
+            
+            if(a->val<b->val)
             {
-                pom->val=a->val;
-            if(!head)
-            {
-                head=pom;
-            }
-            else
-            {
-            ListNode* x=head;
-                while(x->next)x=x->next;
-                x->next=pom;
-            }
+             head->next=a;
                 a=a->next;
             }
-        
             else
             {
-            pom->val=b->val;
-            if(!head)
-            {
-                head=pom;
-            }
-            else
-            {
-            ListNode* x=head;
-                while(x->next)x=x->next;
-                x->next=pom;
-            }
+                head->next=b;
                 b=b->next;
             }
-        
+        head=head->next;
         }
         
-        while(a)
-        {
-            ListNode* pom=(ListNode*)malloc(sizeof(ListNode));
-            pom->next=NULL;
-            
-                pom->val=a->val;
-            if(!head)
-            {
-                head=pom;
-            }
-            else
-            {
-            ListNode* x=head;
-                while(x->next)x=x->next;
-                x->next=pom;
-            }
-                a=a->next;
-        }
-        while(b)
-           {
-            ListNode* pom=(ListNode*)malloc(sizeof(ListNode));
-            pom->next=NULL;
-            
-                pom->val=b->val;
-            if(!head)
-            {
-                head=pom;
-            }
-            else
-            {
-            ListNode* x=head;
-                while(x->next)x=x->next;
-                x->next=pom;
-            }
-                b=b->next;
-        }
-        return head;
+        if(a)head->next=a;
+        if(b)head->next=b;
+        return dummy->next;
     }
 };
