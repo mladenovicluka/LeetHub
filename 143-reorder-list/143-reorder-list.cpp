@@ -10,60 +10,46 @@
  */
 class Solution {
 public:
-void reorderList(ListNode* head) {
-     deque<int> dq;
-     ListNode* curr=head;
-    while(curr)
+ void reorderList(ListNode* head)
     {
-        dq.push_back(curr->val);
-        curr=curr->next;
-    }
-        
-    ListNode* newlist=NULL;
-    while(1)
-    {
-        
-                
-         if(dq.empty())break;
-        
-        ListNode* pom1=(ListNode*)malloc(sizeof(ListNode));
-        pom1->val=dq.front();
-        dq.pop_front();
-        pom1->next=NULL;
-        if(!newlist)newlist=pom1;
-        else
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+        while (fast && fast->next)
         {
-         ListNode* x=newlist;
-            while(x->next)x=x->next;
-            x->next=pom1;
-        
-        }
-        if(dq.empty())break;
-        
-        ListNode* pom=(ListNode*)malloc(sizeof(ListNode));
-        pom->val=dq.back();
-        dq.pop_back();
-        pom->next=NULL;
-        if(!newlist)newlist=pom;
-        else
-        {
-         ListNode* x=newlist;
-            while(x->next)x=x->next;
-            x->next=pom;
-        
-        }
+            slow = slow->next;
+            fast = fast->next->next;
 
-              
+        }
+       // slow = slow->next;
+
+
+        ListNode* p = slow;
+        ListNode* q = NULL;
+        ListNode* r = q;
+
+        while (p)
+        {
+            r = q;
+            q = p;
+            p = p->next;
+            q->next = r;
+
+        }
+        ListNode* kraj = q;
+        ListNode* pocetak = head;
         
-    }
-      while(head)
-      {
-          head->val=newlist->val;
-          head=head->next;
-          newlist=newlist->next;
-      }
-    
-        head=newlist;
-        
+        while (kraj && pocetak)
+        {
+
+            ListNode* pompocetak = pocetak->next;
+            ListNode* pomkraj = kraj->next;
+            pocetak->next = kraj;
+            kraj->next = pompocetak;
+            pocetak = pompocetak;
+            kraj = pomkraj;
+
+        }
+       
+
     }
 };
